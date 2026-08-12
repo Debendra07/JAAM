@@ -20,7 +20,7 @@ export const jaamThemes: JaamTheme[] = [
     },
 
     background: {
-      image: "/backgrounds/whiskey/whiskey-night-01.jpg",
+      image: `${import.meta.env.BASE_URL}backgrounds/whiskey/whiskey-night-01.jpg`,
       position: "center",
       brightness: 0.62,
       saturation: 0.9,

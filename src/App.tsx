@@ -8,6 +8,8 @@ import { jaamThemes } from "./data/themes";
 import { jaamTracks } from "./data/tracks";
 
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
+import { assetPath } from "./utils/assetPath";
+
 
 function App() {
   const {
@@ -31,14 +33,14 @@ function App() {
     <main className="app">
 
       <CinematicBackground
-        image={currentTheme.background.image}
+        image={assetPath(currentTheme.background.image)}
         glow={currentTheme.atmosphere.glow}
         overlay={currentTheme.atmosphere.overlay}
         position={currentTheme.background.position}
         brightness={currentTheme.background.brightness}
         saturation={currentTheme.background.saturation}
       />
-
+      
       <div className="jaam-layout">
 
         <div className="jaam-layout__brand">
