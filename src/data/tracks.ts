@@ -9,7 +9,7 @@ export const jaamTracks: JaamTrack[] = [
     title: "Track Name",
     artist: "Artist Name",
     audio: `${AUDIO_BASE_URL}/whiskey/track-01.mp3`,
-    artwork: "/artwork/whiskey/whiskey-01.jpg",
+    artwork: "/artwork/whiskey/whiskey-night-01.jpg",
     playlistId: "whiskey-nights",
     themeId: "whiskey",
   },
