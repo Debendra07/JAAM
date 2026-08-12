@@ -20,7 +20,7 @@ export const jaamThemes: JaamTheme[] = [
     },
 
     background: {
-      image: `${import.meta.env.BASE_URL}backgrounds/whiskey/whiskey-night-01.jpg`,
+      image: "backgrounds/whiskey/whiskey-night-01.jpg",
       position: "center",
       brightness: 0.62,
       saturation: 0.9,
@@ -46,7 +46,7 @@ export const jaamThemes: JaamTheme[] = [
     },
 
     background: {
-      image: `${import.meta.env.BASE_URL}backgrounds/beer/beer-hall-01.jpg`,
+      image: "backgrounds/beer/beer-hall-01.jpg",
       position: "center",
       brightness: 0.58,
       saturation: 0.95,
@@ -72,7 +72,7 @@ export const jaamThemes: JaamTheme[] = [
     },
 
     background: {
-      image: `${import.meta.env.BASE_URL}backgrounds/wine/wine-01.jpg`,
+      image: "backgrounds/wine/wine-01.jpg",
       position: "center",
       brightness: 0.56,
       saturation: 0.92,
@@ -98,7 +98,7 @@ export const jaamThemes: JaamTheme[] = [
     },
 
     background: {
-      image: `${import.meta.env.BASE_URL}backgrounds/cocktail/cocktail-lounge-01.jpg`,
+      image: "backgrounds/cocktail/cocktail-lounge-01.jpg",
       position: "center",
       brightness: 0.58,
       saturation: 1.05,
