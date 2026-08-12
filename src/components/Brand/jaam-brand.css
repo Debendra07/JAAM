@@ -1,0 +1,52 @@
+.jaam-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  user-select: none;
+}
+
+.jaam-brand__mark {
+  width: 42px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-gold);
+
+  font-size: 34px;
+
+  filter: drop-shadow(
+    0 0 10px rgba(245, 184, 75, 0.25)
+  );
+}
+
+.jaam-brand__glass {
+  display: block;
+
+  transform: rotate(-20deg);
+}
+
+.jaam-brand__text h1 {
+  color: var(--color-text);
+
+  font-size: 1.65rem;
+  font-weight: 400;
+
+  letter-spacing: 0.3em;
+
+  line-height: 1;
+}
+
+.jaam-brand__text p {
+  margin-top: 8px;
+
+  color: var(--color-text-muted);
+
+  font-size: 0.62rem;
+  font-weight: 500;
+
+  letter-spacing: 0.28em;
+}
