@@ -1,7 +1,16 @@
+export interface JaamAtmosphere {
+  glow: string;
+  overlay: string;
+  particle: string;
+  intensity: number;
+  particleCount: number;
+  haze: number;
+  motionSpeed: number;
+}
+
 export interface JaamTheme {
   id: string;
   name: string;
-
   colors: {
     primary: string;
     secondary: string;
@@ -9,13 +18,7 @@ export interface JaamTheme {
     background: string;
     text: string;
   };
-
-  atmosphere: {
-    glow: string;
-    overlay: string;
-    particle: string;
-  };
-
+  atmosphere: JaamAtmosphere;
   background: {
     image: string;
     position: string;

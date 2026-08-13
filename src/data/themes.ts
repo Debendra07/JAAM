@@ -1,107 +1,158 @@
 import type { JaamTheme } from "../types/theme";
 
+function makeTheme(
+  id: string,
+  name: string,
+  primary: string,
+  secondary: string,
+  accent: string,
+  background: string,
+  backgroundImage: string,
+  atmosphere: {
+    intensity: number;
+    particleCount: number;
+    haze: number;
+    motionSpeed: number;
+  },
+): JaamTheme {
+  return {
+    id,
+    name,
+
+    colors: {
+      primary,
+      secondary,
+      accent,
+      background,
+      text: "#f5f3ee",
+    },
+
+    atmosphere: {
+      glow: `${primary}44`,
+      overlay: "rgba(4, 2, 4, 0.5)",
+      particle: accent,
+      ...atmosphere,
+    },
+
+    background: {
+      image: backgroundImage,
+      position: "center",
+      brightness: 0.72,
+      saturation: 1,
+    },
+  };
+}
+
 export const jaamThemes: JaamTheme[] = [
-  {
-    id: "whiskey",
-    name: "Whiskey Nights",
-
-    colors: {
-      primary: "#f5b84b",
-      secondary: "#8c4f1f",
-      accent: "#ffcf70",
-      background: "#050302",
-      text: "#f5f3ee",
+  makeTheme(
+    "whiskey",
+    "Whiskey Nights",
+    "#f5b84b",
+    "#8c4f1f",
+    "#ffcf70",
+    "#050302",
+    "backgrounds/whiskey/whiskey-night-01.jpg",
+    {
+      intensity: 1,
+      particleCount: 34,
+      haze: 0.16,
+      motionSpeed: 1,
     },
+  ),
 
-    atmosphere: {
-      glow: "rgba(245, 184, 75, 0.25)",
-      overlay: "rgba(10, 4, 1, 0.48)",
-      particle: "#f5b84b",
+  makeTheme(
+    "wine",
+    "Wine Collection",
+    "#b8475d",
+    "#571525",
+    "#e88b9c",
+    "#090204",
+    "backgrounds/wine/wine-01.jpg",
+    {
+      intensity: 0.85,
+      particleCount: 26,
+      haze: 0.2,
+      motionSpeed: 0.75,
     },
+  ),
 
-    background: {
-      image: "backgrounds/whiskey/whiskey-night-01.jpg",
-      position: "center",
-      brightness: 0.62,
-      saturation: 0.9,
+  makeTheme(
+    "cocktail",
+    "Cocktail Lounge",
+    "#7b8cff",
+    "#442c9b",
+    "#9de7ff",
+    "#030308",
+    "backgrounds/cocktail/cocktail-01.jpg",
+    {
+      intensity: 1.05,
+      particleCount: 40,
+      haze: 0.12,
+      motionSpeed: 1.25,
     },
-  },
+  ),
 
-  {
-    id: "beer",
-    name: "Beer Hall",
-
-    colors: {
-      primary: "#f2a93b",
-      secondary: "#9c641d",
-      accent: "#ffd477",
-      background: "#080502",
-      text: "#f5f3ee",
+  makeTheme(
+    "beer",
+    "Beer Hall",
+    "#f2a93b",
+    "#9c641d",
+    "#ffd477",
+    "#080502",
+    "backgrounds/beer/beer-01.jpg",
+    {
+      intensity: 0.95,
+      particleCount: 30,
+      haze: 0.17,
+      motionSpeed: 0.95,
     },
+  ),
 
-    atmosphere: {
-      glow: "rgba(242, 169, 59, 0.22)",
-      overlay: "rgba(8, 5, 2, 0.5)",
-      particle: "#ffd477",
+  makeTheme(
+    "vodka",
+    "Vodka Freeze",
+    "#9de7ff",
+    "#416b91",
+    "#d8f7ff",
+    "#02070a",
+    "backgrounds/vodka/vodka-01.jpg",
+    {
+      intensity: 0.9,
+      particleCount: 28,
+      haze: 0.14,
+      motionSpeed: 0.85,
     },
+  ),
 
-    background: {
-      image: "backgrounds/beer/beer-hall-01.jpg",
-      position: "center",
-      brightness: 0.58,
-      saturation: 0.95,
+  makeTheme(
+    "champagne",
+    "Champagne Life",
+    "#e7c978",
+    "#9d8040",
+    "#fff0b0",
+    "#080704",
+    "backgrounds/champagne/champagne-01.jpg",
+    {
+      intensity: 0.95,
+      particleCount: 36,
+      haze: 0.12,
+      motionSpeed: 1.05,
     },
-  },
+  ),
 
-  {
-    id: "wine",
-    name: "Wine Collection",
-
-    colors: {
-      primary: "#b8475d",
-      secondary: "#571525",
-      accent: "#e88b9c",
-      background: "#090204",
-      text: "#f5f3ee",
+  makeTheme(
+    "after-hours",
+    "After Hours",
+    "#a98cff",
+    "#4b327e",
+    "#d2c4ff",
+    "#040207",
+    "backgrounds/after-hours/after-hours-01.jpg",
+    {
+      intensity: 0.7,
+      particleCount: 18,
+      haze: 0.22,
+      motionSpeed: 0.55,
     },
-
-    atmosphere: {
-      glow: "rgba(184, 71, 93, 0.22)",
-      overlay: "rgba(8, 1, 4, 0.52)",
-      particle: "#e88b9c",
-    },
-
-    background: {
-      image: "backgrounds/wine/wine-01.jpg",
-      position: "center",
-      brightness: 0.56,
-      saturation: 0.92,
-    },
-  },
-
-  {
-    id: "cocktail",
-    name: "Cocktail Lounge",
-
-    colors: {
-      primary: "#7b8cff",
-      secondary: "#442c9b",
-      accent: "#9de7ff",
-      background: "#030308",
-      text: "#f5f3ee",
-    },
-
-    atmosphere: {
-      glow: "rgba(123, 140, 255, 0.24)",
-      overlay: "rgba(2, 3, 12, 0.52)",
-      particle: "#9de7ff",
-    },
-
-    background: {
-      image: "backgrounds/cocktail/cocktail-lounge-01.jpg",
-      position: "center",
-      brightness: 0.58,
-      saturation: 1.05,
-    },
-  },
+  ),
 ];

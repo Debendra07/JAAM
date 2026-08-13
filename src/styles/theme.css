@@ -99,4 +99,13 @@
   --transition-fast: 180ms ease;
   --transition-normal: 300ms ease;
   --transition-slow: 700ms ease;
+
+
+  
+  --jaam-primary: #f5b84b;
+  --jaam-secondary: #8c4f1f;
+  --jaam-accent: #ffcf70;
+  --jaam-background: #050302;
+  --jaam-text: #f5f3ee;
+
 }

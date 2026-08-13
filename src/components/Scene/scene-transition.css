@@ -1,0 +1,147 @@
+.scene-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  background: var(--scene-background);
+}
+
+.scene-layer {
+  position: absolute;
+  inset: -3%;
+  overflow: hidden;
+  will-change: opacity, transform, filter;
+}
+
+.scene-layer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: var(--scene-position, center);
+  filter:
+    brightness(var(--scene-brightness, 0.58))
+    saturate(var(--scene-saturation, 0.9))
+    contrast(1.08);
+  transform: scale(1.04);
+  animation: jaamBackgroundBreathing 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.scene-layer--previous {
+  z-index: 2;
+  opacity: 0;
+}
+
+.scene-layer--previous img {
+  object-position: var(--scene-previous-position, center);
+  filter:
+    brightness(var(--scene-previous-brightness, 0.58))
+    saturate(var(--scene-previous-saturation, 0.9))
+    contrast(1.08);
+}
+
+.scene-layer--current {
+  z-index: 1;
+  opacity: 1;
+}
+
+.scene-layer__color {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 18%,
+      var(--scene-glow) 150%
+    );
+  opacity: 0.22;
+  mix-blend-mode: screen;
+}
+
+.scene-layer__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    radial-gradient(
+      circle at center,
+      var(--scene-glow),
+      transparent 65%
+    );
+  opacity: 0;
+}
+
+.scene-layer__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 34%,
+      rgba(0, 0, 0, 0.25) 65%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
+}
+
+.scene-transition--exiting .scene-layer--previous {
+  opacity: 1;
+  animation: jaamSceneOldExit 430ms ease forwards;
+}
+
+.scene-transition--exiting .scene-layer--current {
+  opacity: 0;
+  animation: jaamSceneNewPrepare 430ms ease forwards;
+}
+
+.scene-transition--entering .scene-layer--current {
+  opacity: 1;
+  animation: jaamSceneEnter 420ms ease forwards;
+}
+
+.scene-transition--entering .scene-layer__flash {
+  animation: jaamSceneColorPulse 500ms ease-out forwards;
+}
+
+@keyframes jaamSceneOldExit {
+  from { opacity: 1; transform: scale(1); filter: blur(0); }
+  to { opacity: 0; transform: scale(1.025); filter: blur(8px); }
+}
+
+@keyframes jaamSceneNewPrepare {
+  from { opacity: 0; transform: scale(1.035); filter: blur(8px); }
+  to { opacity: 1; transform: scale(1.04); filter: blur(0); }
+}
+
+@keyframes jaamSceneEnter {
+  from { opacity: 0; transform: scale(1.025); filter: blur(8px); }
+  to { opacity: 1; transform: scale(1.04); filter: blur(0); }
+}
+
+@keyframes jaamSceneColorPulse {
+  0% { opacity: 0; }
+  25% { opacity: 0.14; }
+  100% { opacity: 0; }
+}
+
+@keyframes jaamBackgroundBreathing {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.07); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-layer,
+  .scene-layer img {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .scene-layer--previous,
+  .scene-layer__flash {
+    display: none;
+  }
+}

@@ -1,208 +1,152 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
 import type { JaamTrack } from "../types/track";
 
-export function useAudioPlayer(
-  tracks: JaamTrack[],
-) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+interface UseAudioPlayerOptions {
+  track: JaamTrack | null;
+  autoPlay: boolean;
+  onEnded: () => void;
+}
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+export function useAudioPlayer({
+  track,
+  autoPlay,
+  onEnded,
+}: UseAudioPlayerOptions) {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const endedRef = useRef(onEnded);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-
   const [duration, setDuration] = useState(0);
-
-  const currentTrack = tracks[currentIndex];
-
-  /*
-   * Create audio element
-   */
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio();
+    endedRef.current = onEnded;
+  }, [onEnded]);
 
-    const audio = audioRef.current;
+  useEffect(() => {
+    const audio = new Audio();
+    audio.preload = "metadata";
+    audioRef.current = audio;
+
+    const handleMetadata = () => {
+      setDuration(Number.isFinite(audio.duration) ? audio.duration : 0);
+      setIsLoading(false);
+    };
+
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleWaiting = () => setIsLoading(true);
+    const handleCanPlay = () => setIsLoading(false);
+    const handleError = () => {
+      setIsLoading(false);
+      setIsPlaying(false);
+      setError("This audio track could not be loaded.");
+    };
+    const handleEnded = () => endedRef.current();
+
+    audio.addEventListener("loadedmetadata", handleMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("waiting", handleWaiting);
+    audio.addEventListener("canplay", handleCanPlay);
+    audio.addEventListener("error", handleError);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
       audio.pause();
-      audio.src = "";
+      audio.removeAttribute("src");
+      audio.load();
       audioRef.current = null;
     };
   }, []);
 
-  /*
-   * Load current track
-   */
-
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio || !track) return;
 
-    if (!audio || !currentTrack) {
-      return;
-    }
-
-    audio.src = currentTrack.audio;
-
-    audio.load();
-
+    setError(null);
     setCurrentTime(0);
     setDuration(0);
+    setIsPlaying(false);
+    setIsLoading(true);
 
-    if (isPlaying) {
-      void audio.play().catch(() => {
-        setIsPlaying(false);
-      });
-    }
-  }, [currentTrack]);
-
-  /*
-   * Audio events
-   */
+    audio.src = track.audio;
+    audio.load();
+  }, [track?.id]);
 
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio || !track || !autoPlay) return;
 
-    if (!audio) {
+    if (!audio.paused) return;
+
+    const start = () => {
+      void audio.play().catch(() => {
+        setIsPlaying(false);
+        setError("The browser blocked audio playback.");
+      });
+    };
+
+    if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      start();
       return;
     }
 
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
+    audio.addEventListener("canplay", start, { once: true });
+    return () => audio.removeEventListener("canplay", start);
+  }, [track?.id, autoPlay]);
 
-    const handleLoadedMetadata = () => {
-      setDuration(audio.duration);
-    };
+  const play = useCallback(async () => {
+    const audio = audioRef.current;
+    if (!audio || !track) return;
 
-    const handleEnded = () => {
-      setCurrentIndex((previous) =>
-        previous + 1 < tracks.length
-          ? previous + 1
-          : 0,
-      );
-    };
+    try {
+      setError(null);
+      await audio.play();
+    } catch {
+      setIsPlaying(false);
+      setError("The browser blocked audio playback.");
+    }
+  }, [track]);
 
-    audio.addEventListener(
-      "timeupdate",
-      handleTimeUpdate,
-    );
-
-    audio.addEventListener(
-      "loadedmetadata",
-      handleLoadedMetadata,
-    );
-
-    audio.addEventListener(
-      "ended",
-      handleEnded,
-    );
-
-    return () => {
-      audio.removeEventListener(
-        "timeupdate",
-        handleTimeUpdate,
-      );
-
-      audio.removeEventListener(
-        "loadedmetadata",
-        handleLoadedMetadata,
-      );
-
-      audio.removeEventListener(
-        "ended",
-        handleEnded,
-      );
-    };
-  }, [tracks.length]);
-
-  /*
-   * Play / Pause
-   */
+  const pause = useCallback(() => {
+    audioRef.current?.pause();
+  }, []);
 
   const togglePlay = useCallback(async () => {
     const audio = audioRef.current;
+    if (!audio) return;
 
-    if (!audio) {
-      return;
+    if (audio.paused) {
+      await play();
+    } else {
+      pause();
     }
-
-    if (isPlaying) {
-      audio.pause();
-
-      setIsPlaying(false);
-
-      return;
-    }
-
-    try {
-      await audio.play();
-
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  }, [isPlaying]);
-
-  /*
-   * Previous
-   */
-
-  const previous = useCallback(() => {
-    setCurrentIndex((previousIndex) =>
-      previousIndex === 0
-        ? tracks.length - 1
-        : previousIndex - 1,
-    );
-  }, [tracks.length]);
-
-  /*
-   * Next
-   */
-
-  const next = useCallback(() => {
-    setCurrentIndex((previousIndex) =>
-      previousIndex + 1 >= tracks.length
-        ? 0
-        : previousIndex + 1,
-    );
-  }, [tracks.length]);
-
-  /*
-   * Seek
-   */
+  }, [play, pause]);
 
   const seek = useCallback((time: number) => {
     const audio = audioRef.current;
+    if (!audio) return;
 
-    if (!audio) {
-      return;
-    }
-
-    audio.currentTime = time;
-
-    setCurrentTime(time);
+    const max = Number.isFinite(audio.duration) ? audio.duration : time;
+    const value = Math.max(0, Math.min(time, max));
+    audio.currentTime = value;
+    setCurrentTime(value);
   }, []);
 
   return {
-    currentTrack,
-
-    currentIndex,
-
     isPlaying,
-
+    isLoading,
     currentTime,
-
     duration,
-
+    error,
+    play,
+    pause,
     togglePlay,
-
-    previous,
-
-    next,
-
     seek,
   };
 }

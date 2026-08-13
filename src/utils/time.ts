@@ -1,17 +1,1 @@
-export function formatTime(seconds: number): string {
-  if (!Number.isFinite(seconds) || seconds < 0) {
-    return "00:00";
-  }
-
-  const minutes = Math.floor(seconds / 60);
-
-  const remainingSeconds = Math.floor(
-    seconds % 60,
-  );
-
-  return `${minutes
-    .toString()
-    .padStart(2, "0")}:${remainingSeconds
-    .toString()
-    .padStart(2, "0")}`;
-}
+export const formatTime=(s:number)=>{if(!Number.isFinite(s)||s<0)return"0:00";const m=Math.floor(s/60),r=Math.floor(s%60);return`${m}:${r.toString().padStart(2,"0")}`};

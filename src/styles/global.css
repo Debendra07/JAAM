@@ -1,0 +1,145 @@
+/* =========================================
+   JAAM — REFERENCE LAYOUT
+   ========================================= */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #050302;
+}
+
+.app.jaam {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #050302;
+  color: #fff;
+}
+
+.jaam-layout {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 370px minmax(0, 1fr);
+  padding: 42px 42px 38px;
+}
+
+.jaam-layout__brand {
+  position: absolute;
+  top: 42px;
+  left: 42px;
+  z-index: 20;
+}
+
+.jaam-layout__playlists {
+  width: 350px;
+  align-self: start;
+  margin-top: 150px;
+}
+
+.playlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jaam-layout__player {
+  min-width: 0;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 30px 54px;
+}
+
+.jaam-layout__player .now-playing {
+  width: min(650px, 62vw);
+  margin-left: -65px;
+}
+
+.jaam-scene-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.jaam-scene-transition [data-scene="previous"] {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .jaam-layout {
+    grid-template-columns: 300px minmax(0, 1fr);
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .jaam-layout__playlists {
+    width: 285px;
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(600px, 60vw);
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .app.jaam {
+    min-height: 100svh;
+    overflow-y: auto;
+  }
+
+  .jaam-layout {
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+    padding: 28px 18px 30px;
+    gap: 22px;
+  }
+
+  .jaam-layout__brand {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  .jaam-layout__playlists {
+    width: 100%;
+    margin-top: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .jaam-layout__playlists::-webkit-scrollbar {
+    display: none;
+  }
+
+  .playlist-list {
+    flex-direction: row;
+    width: max-content;
+  }
+
+  .jaam-layout__player {
+    min-height: auto;
+    padding: 35px 0 20px;
+    align-items: center;
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(650px, 94vw);
+    margin: 0;
+  }
+}

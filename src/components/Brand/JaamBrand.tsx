@@ -1,19 +1,19 @@
 import "./jaam-brand.css";
 
-function JaamBrand() {
+export default function JaamBrand() {
   return (
-    <header className="jaam-brand">
-      <div className="jaam-brand__mark">
-        <span className="jaam-brand__glass">◖</span>
-      </div>
+    <div className="brand" aria-label="JAAM Music for your spirit">
+      <img
+        src={`${import.meta.env.BASE_URL}artwork/jaam-wine-glass.svg`}
+        alt=""
+        className="brand__logo"
+        aria-hidden="true"
+      />
 
-      <div className="jaam-brand__text">
-        <h1>JAAM</h1>
-
-        <p>MUSIC FOR YOUR SPIRIT</p>
+      <div className="brand__copy">
+        <div className="brand__name">JAAM</div>
+        <div className="brand__tagline">MUSIC FOR YOUR SPIRIT</div>
       </div>
-    </header>
+    </div>
   );
 }
-
-export default JaamBrand;

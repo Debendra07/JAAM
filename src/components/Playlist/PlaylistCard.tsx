@@ -1,41 +1,38 @@
 import type { JaamPlaylist } from "../../types/playlist";
+import { assetPath } from "../../utils/assetPath";
 
 import "./playlist-card.css";
 
 interface PlaylistCardProps {
   playlist: JaamPlaylist;
-  active?: boolean;
-  onClick?: () => void;
+  active: boolean;
+  onClick: () => void;
 }
 
-function PlaylistCard({
+export default function PlaylistCard({
   playlist,
-  active = false,
+  active,
   onClick,
 }: PlaylistCardProps) {
   return (
     <button
-      className={`playlist-card ${
-        active ? "playlist-card--active" : ""
-      }`}
-      onClick={onClick}
       type="button"
+      className={`playlist-card${active ? " active" : ""}`}
+      onClick={onClick}
+      aria-pressed={active}
     >
-      <span className="playlist-card__icon">
-        {playlist.icon}
+      <span className="playlist-card__artwork">
+        <img
+          src={assetPath(playlist.artwork)}
+          alt=""
+          draggable={false}
+        />
       </span>
 
-      <span className="playlist-card__content">
-        <span className="playlist-card__name">
-          {playlist.name}
-        </span>
-
-        <span className="playlist-card__description">
-          {playlist.description}
-        </span>
+      <span className="playlist-card__copy">
+        <b>{playlist.name}</b>
+        <small>{playlist.subtitle}</small>
       </span>
     </button>
   );
 }
-
-export default PlaylistCard;

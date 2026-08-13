@@ -4,56 +4,56 @@ export const jaamPlaylists: JaamPlaylist[] = [
   {
     id: "whiskey-nights",
     name: "Whiskey Nights",
-    description: "Smooth. Deep. Timeless.",
-    icon: "🥃",
+    subtitle: "Old souls & amber evenings",
     themeId: "whiskey",
-  },
-
-  {
-    id: "beer-hall",
-    name: "Beer Hall",
-    description: "Lively. Fun. Unfiltered.",
-    icon: "🍺",
-    themeId: "beer",
+    artwork: "artwork/whiskey.svg",
   },
 
   {
     id: "wine-collection",
     name: "Wine Collection",
-    description: "Elegant. Rich. Classic.",
-    icon: "🍷",
+    subtitle: "Velvet nights & slow songs",
     themeId: "wine",
+    artwork: "artwork/wine.svg",
   },
 
   {
     id: "cocktail-lounge",
     name: "Cocktail Lounge",
-    description: "Neon. Nightlife. Vibes.",
-    icon: "🍸",
+    subtitle: "Neon nights & smooth grooves",
     themeId: "cocktail",
+    artwork: "artwork/cocktail.svg",
+  },
+
+  {
+    id: "beer-hall",
+    name: "Beer Hall",
+    subtitle: "Good songs. Long nights.",
+    themeId: "beer",
+    artwork: "artwork/beer.svg",
   },
 
   {
     id: "vodka-freeze",
     name: "Vodka Freeze",
-    description: "Cold. Bold. Wild.",
-    icon: "🧊",
+    subtitle: "Cold drinks. Colder nights.",
     themeId: "vodka",
+    artwork: "artwork/vodka.svg",
   },
 
   {
     id: "champagne-life",
     name: "Champagne Life",
-    description: "Luxury. Celebration.",
-    icon: "🍾",
+    subtitle: "Golden nights & celebration",
     themeId: "champagne",
+    artwork: "artwork/champagne.svg",
   },
 
   {
     id: "after-hours",
     name: "After Hours",
-    description: "Late nights. Deep feels.",
-    icon: "🌙",
+    subtitle: "For the nights that never end",
     themeId: "after-hours",
+    artwork: "artwork/after-hours.svg",
   },
 ];

@@ -1,0 +1,92 @@
+.ambient-particles {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+}
+
+.ambient-particle {
+  position: absolute;
+
+  left: var(--particle-left);
+  top: var(--particle-top);
+
+  width: var(--particle-size);
+  height: var(--particle-size);
+
+  border-radius: 50%;
+
+  background:
+    var(--atmosphere-particle);
+
+  opacity: var(--particle-opacity);
+
+  box-shadow:
+    0 0 8px
+      var(--atmosphere-particle);
+
+  animation:
+    jaamParticleFloat
+    var(--particle-duration)
+    ease-in-out
+    var(--particle-delay)
+    infinite;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+@keyframes jaamParticleFloat {
+  0% {
+    transform:
+      translate3d(
+        0,
+        12vh,
+        0
+      )
+      scale(0.8);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: var(--particle-opacity);
+  }
+
+  50% {
+    transform:
+      translate3d(
+        2vw,
+        -4vh,
+        0
+      )
+      scale(1);
+  }
+
+  80% {
+    opacity: var(--particle-opacity);
+  }
+
+  100% {
+    transform:
+      translate3d(
+        -2vw,
+        -18vh,
+        0
+      )
+      scale(0.6);
+
+    opacity: 0;
+  }
+}
+.ambient-particle {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-particle {
+    animation: none !important;
+    opacity: calc(var(--particle-opacity) * 0.65);
+  }
+}

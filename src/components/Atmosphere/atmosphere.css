@@ -1,0 +1,152 @@
+.atmosphere-engine {
+  position: fixed;
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  opacity: var(--atmosphere-intensity);
+
+  isolation: isolate;
+}
+
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+}
+
+.ambient-glow__orb {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  mix-blend-mode: screen;
+
+  filter: blur(80px);
+
+  opacity: 0.16;
+
+  background:
+    radial-gradient(
+      circle,
+      var(--atmosphere-color)
+        0%,
+      transparent
+        70%
+    );
+}
+
+.ambient-glow__orb--one {
+  width: 42vw;
+  height: 42vw;
+
+  top: -18vw;
+  left: 12vw;
+
+  animation:
+    jaamGlowOne
+    18s
+    ease-in-out
+    infinite;
+}
+
+.ambient-glow__orb--two {
+  width: 36vw;
+  height: 36vw;
+
+  right: -12vw;
+  bottom: -12vw;
+
+  opacity: 0.12;
+
+  animation:
+    jaamGlowTwo
+    22s
+    ease-in-out
+    infinite;
+}
+
+.ambient-glow__orb--three {
+  width: 24vw;
+  height: 24vw;
+
+  left: 45%;
+  top: 40%;
+
+  opacity: 0.07;
+
+  animation:
+    jaamGlowThree
+    26s
+    ease-in-out
+    infinite;
+}
+
+@keyframes jaamGlowOne {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(4vw, 3vh, 0)
+      scale(1.08);
+  }
+}
+
+@keyframes jaamGlowTwo {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(-5vw, -4vh, 0)
+      scale(1.1);
+  }
+}
+
+@keyframes jaamGlowThree {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(3vw, -3vh, 0)
+      scale(1.15);
+  }
+}
+/* ========================================
+   ACCESSIBILITY / PERFORMANCE
+   ======================================== */
+
+.atmosphere-engine--reduced .ambient-glow__orb,
+.atmosphere-engine--reduced .ambient-haze__layer,
+.atmosphere-engine--reduced .ambient-particle {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow__orb,
+  .ambient-haze__layer,
+  .ambient-particle {
+    animation: none !important;
+  }
+}

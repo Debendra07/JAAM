@@ -1,0 +1,88 @@
+.ambient-haze {
+  position: absolute;
+  inset: -20%;
+
+  overflow: hidden;
+
+  opacity: var(--atmosphere-haze, 0.16);
+
+  filter: blur(35px);
+}
+
+.ambient-haze__layer {
+  position: absolute;
+
+  width: 80%;
+  height: 40%;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--atmosphere-glow),
+      transparent
+    );
+
+  transform: rotate(-12deg);
+}
+
+.ambient-haze__layer--one {
+  top: 15%;
+  left: -20%;
+
+  animation:
+    jaamHazeOne
+    30s
+    ease-in-out
+    infinite;
+}
+
+.ambient-haze__layer--two {
+  right: -20%;
+  bottom: 10%;
+
+  opacity: 0.6;
+
+  animation:
+    jaamHazeTwo
+    36s
+    ease-in-out
+    infinite;
+}
+
+@keyframes jaamHazeOne {
+  0%,
+  100% {
+    transform:
+      translate3d(-4%, 0, 0)
+      rotate(-12deg);
+  }
+
+  50% {
+    transform:
+      translate3d(22%, 8%, 0)
+      rotate(-8deg);
+  }
+}
+
+@keyframes jaamHazeTwo {
+  0%,
+  100% {
+    transform:
+      translate3d(5%, 0, 0)
+      rotate(12deg);
+  }
+
+  50% {
+    transform:
+      translate3d(-20%, -6%, 0)
+      rotate(8deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-haze__layer {
+    animation: none !important;
+  }
+}

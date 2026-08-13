@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./cinematic-background.css";
 
 interface CinematicBackgroundProps {
@@ -17,30 +18,53 @@ function CinematicBackground({
   brightness = 0.62,
   saturation = 0.9,
 }: CinematicBackgroundProps) {
+  const [currentImage, setCurrentImage] = useState(image);
+  const [previousImage, setPreviousImage] = useState<string | null>(null);
+  const [transitioning, setTransitioning] = useState(false);
+
+  useEffect(() => {
+    if (image === currentImage) return;
+
+    setPreviousImage(currentImage);
+    setCurrentImage(image);
+    setTransitioning(true);
+
+    const timer = window.setTimeout(() => {
+      setPreviousImage(null);
+      setTransitioning(false);
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [image, currentImage]);
+
+  const style = {
+    "--jaam-glow": glow,
+    "--jaam-overlay": overlay,
+    "--jaam-position": position,
+    "--jaam-brightness": brightness,
+    "--jaam-saturation": saturation,
+  } as React.CSSProperties;
+
   return (
-    <div
-      className="cinematic-background"
-      style={
-        {
-          "--jaam-glow": glow,
-          "--jaam-overlay": overlay,
-          "--jaam-position": position,
-          "--jaam-brightness": brightness,
-          "--jaam-saturation": saturation,
-        } as React.CSSProperties
-      }
-      aria-hidden="true"
-    >
+    <div className="cinematic-background" style={style} aria-hidden="true">
       <div className="cinematic-background__base" />
 
-      <div className="cinematic-background__image">
-        <img src={image} alt="" />
+      {previousImage && (
+        <div className="cinematic-background__image cinematic-background__image--previous">
+          <img src={previousImage} alt="" />
+        </div>
+      )}
+
+      <div
+        className={`cinematic-background__image ${
+          transitioning ? "cinematic-background__image--enter" : ""
+        }`}
+      >
+        <img src={currentImage} alt="" />
       </div>
 
       <div className="cinematic-background__overlay" />
-
       <div className="cinematic-background__glow" />
-
       <div className="cinematic-background__vignette" />
     </div>
   );
