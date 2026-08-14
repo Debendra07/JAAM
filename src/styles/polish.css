@@ -1,0 +1,291 @@
+/* =========================================================
+   JAAM — PACK 8 / POLISH
+   Visual refinement only.
+   Keeps the existing Pack 7 DOM/UI structure unchanged.
+   ========================================================= */
+
+:root {
+  /* Typography */
+  --jaam-font-display: Georgia, "Times New Roman", serif;
+  --jaam-font-ui: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Refined rhythm */
+  --jaam-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --jaam-ease-standard: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --jaam-duration-fast: 160ms;
+  --jaam-duration-normal: 260ms;
+  --jaam-duration-scene: 720ms;
+
+  /* Glass */
+  --jaam-glass-fill: rgba(8, 7, 5, 0.48);
+  --jaam-glass-fill-hover: rgba(18, 13, 7, 0.62);
+  --jaam-glass-border: rgba(255, 255, 255, 0.11);
+  --jaam-glass-border-active: rgba(245, 184, 75, 0.72);
+  --jaam-glass-shadow: 0 14px 45px rgba(0, 0, 0, 0.28);
+  --jaam-glass-blur: 12px;
+}
+
+/* Prevent browser defaults from introducing visual drift. */
+.app.jaam,
+.app.jaam button,
+.app.jaam input {
+  font-family: var(--jaam-font-ui);
+}
+
+.app.jaam {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -----------------------------
+   Brand
+   ----------------------------- */
+.brand__name,
+.playlist-card__copy b,
+.playlist-card__copy small,
+.now-playing__title {
+  font-family: var(--jaam-font-display);
+}
+
+.brand {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.28));
+}
+
+.brand__logo {
+  object-fit: contain;
+  transform: translateZ(0);
+}
+
+.brand__name {
+  letter-spacing: 0.075em;
+}
+
+.brand__tagline {
+  opacity: 0.78;
+}
+
+/* -----------------------------
+   Playlist cards
+   ----------------------------- */
+.playlist-card {
+  background: var(--jaam-glass-fill);
+  border-color: var(--jaam-glass-border);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(var(--jaam-glass-blur));
+  -webkit-backdrop-filter: blur(var(--jaam-glass-blur));
+  transform: translate3d(0, 0, 0);
+  transition:
+    background var(--jaam-duration-normal) var(--jaam-ease-out),
+    border-color var(--jaam-duration-normal) var(--jaam-ease-out),
+    box-shadow var(--jaam-duration-normal) var(--jaam-ease-out),
+    transform var(--jaam-duration-fast) var(--jaam-ease-out);
+}
+
+.playlist-card:hover {
+  background: var(--jaam-glass-fill-hover);
+  box-shadow: var(--jaam-glass-shadow);
+}
+
+.playlist-card.active {
+  border-color: var(--jaam-glass-border-active);
+  box-shadow:
+    0 12px 38px rgba(0, 0, 0, 0.24),
+    0 0 24px rgba(245, 184, 75, 0.08);
+}
+
+.playlist-card__artwork {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.playlist-card__artwork img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.playlist-card__copy {
+  gap: 6px;
+}
+
+.playlist-card__copy b {
+  letter-spacing: -0.01em;
+}
+
+.playlist-card__copy small {
+  letter-spacing: 0.005em;
+}
+
+/* -----------------------------
+   Now Playing
+   ----------------------------- */
+.now-playing {
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.18));
+}
+
+.now-playing__label {
+  font-family: var(--jaam-font-ui);
+  text-shadow: 0 0 18px rgba(245, 184, 75, 0.12);
+}
+
+.now-playing__title {
+  text-wrap: balance;
+  font-weight: 500;
+  text-shadow:
+    0 3px 24px rgba(0, 0, 0, 0.45),
+    0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.now-playing__artist {
+  font-family: var(--jaam-font-display);
+}
+
+.now-playing__wave {
+  contain: layout paint;
+}
+
+.now-playing__wave i {
+  will-change: transform, opacity;
+}
+
+.now-playing__controls {
+  margin-top: 2px;
+}
+
+.now-playing__button {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(5, 4, 2, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+  transition:
+    border-color var(--jaam-duration-normal) var(--jaam-ease-out),
+    background var(--jaam-duration-normal) var(--jaam-ease-out),
+    box-shadow var(--jaam-duration-normal) var(--jaam-ease-out),
+    transform var(--jaam-duration-fast) var(--jaam-ease-out);
+}
+
+.now-playing__button--main {
+  box-shadow:
+    0 0 34px rgba(245, 184, 75, 0.10),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.now-playing__button:focus-visible,
+.now-playing__progress input:focus-visible {
+  outline: 1px solid var(--jaam-accent);
+  outline-offset: 4px;
+}
+
+.now-playing__progress input {
+  touch-action: pan-y;
+}
+
+/* -----------------------------
+   Cinematic background polish
+   ----------------------------- */
+.cinematic-background__image,
+.cinematic-background__image img,
+.cinematic-background__glow {
+  backface-visibility: hidden;
+}
+
+.cinematic-background__image img {
+  will-change: transform;
+}
+
+.cinematic-background__glow {
+  will-change: opacity;
+}
+
+/* Keep the scene transition smooth but not expensive. */
+.scene-layer {
+  backface-visibility: hidden;
+}
+
+.scene-layer img {
+  backface-visibility: hidden;
+}
+
+/* -----------------------------
+   Atmospheric layers
+   ----------------------------- */
+.atmosphere-engine {
+  contain: layout paint style;
+}
+
+.ambient-glow__orb {
+  will-change: transform;
+}
+
+/* -----------------------------
+   Mobile polish
+   ----------------------------- */
+@media (max-width: 800px) {
+  .jaam-layout__player .now-playing {
+    width: min(560px, calc(100vw - 36px));
+  }
+
+  .now-playing__title {
+    text-wrap: pretty;
+  }
+
+  .playlist-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .jaam-layout {
+    padding-inline: 14px;
+  }
+
+  .playlist-list {
+    gap: 8px;
+  }
+
+  .playlist-card {
+    min-width: 218px;
+  }
+}
+
+/* Touch devices should not retain hover transforms. */
+@media (hover: none), (pointer: coarse) {
+  .playlist-card:hover,
+  .now-playing__button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* -----------------------------
+   Reduced motion
+   ----------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .playlist-card,
+  .now-playing__button,
+  .now-playing__wave i {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .playlist-card:hover,
+  .now-playing__button:hover:not(:disabled),
+  .now-playing__button:active:not(:disabled) {
+    transform: none !important;
+  }
+
+  .cinematic-background__image img,
+  .cinematic-background__glow,
+  .scene-layer img,
+  .ambient-glow__orb {
+    will-change: auto;
+  }
+}
+
+/* Very low-power / hidden background optimization. */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-background__glow,
+  .ambient-glow__orb,
+  .ambient-haze__layer,
+  .ambient-particle {
+    display: none;
+  }
+}

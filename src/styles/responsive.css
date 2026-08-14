@@ -1,33 +1,330 @@
+/* =========================================================
+   JAAM — SCREEN / ASPECT-RATIO RESPONSIVE FIX
+   Pack 8 refinement
+   Keeps the existing UI structure unchanged.
+   ========================================================= */
+
 :root {
-  --content-padding: 40px;
+  --jaam-safe-inline: clamp(18px, 3vw, 42px);
 }
 
-/* ========================================
-   TABLET
-   ======================================== */
+/* Desktop and laptop: keep the complete scene inside the viewport. */
+@media (min-width: 801px) {
+  #root,
+  body,
+  .app.jaam {
+    min-height: 100dvh;
+    height: 100dvh;
+  }
 
-@media (max-width: 1024px) {
-  :root {
-    --content-padding: 28px;
+  .jaam-layout {
+    min-height: 100dvh;
+    height: 100dvh;
+    padding: clamp(24px, 3.2vh, 42px)
+             var(--jaam-safe-inline)
+             clamp(18px, 2.8vh, 38px);
+  }
+
+  .jaam-layout__brand {
+    top: clamp(24px, 3.2vh, 42px);
+    left: var(--jaam-safe-inline);
+  }
+
+  .jaam-layout__playlists {
+    width: clamp(280px, 22vw, 350px);
+    margin-top: clamp(105px, 15vh, 150px);
+  }
+
+  .playlist-list {
+    gap: clamp(7px, 1vh, 10px);
+  }
+
+  .jaam-layout__player {
+    min-height: 0;
+    height: 100%;
+    padding:
+      0
+      clamp(12px, 2vw, 30px)
+      clamp(18px, 5vh, 54px);
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(650px, 58vw);
+    margin-left: clamp(-65px, -3.8vw, 0px);
   }
 }
 
-/* ========================================
-   MOBILE
-   ======================================== */
+/* Laptop / short desktop screens.
+   This is the important fix for 1366x768, 1440x800,
+   1536x864 and similar browser viewport heights. */
+@media (min-width: 801px) and (max-height: 850px) {
+  .jaam-layout {
+    padding-top: 22px;
+    padding-bottom: 16px;
+  }
 
-@media (max-width: 768px) {
-  :root {
-    --content-padding: 20px;
+  .jaam-layout__brand {
+    top: 22px;
+  }
+
+  .jaam-layout__playlists {
+    margin-top: 105px;
+  }
+
+  .playlist-card {
+    min-height: 72px;
+    padding: 8px 12px;
+    gap: 13px;
+  }
+
+  .playlist-card__artwork {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+
+  .playlist-card__copy {
+    gap: 5px;
+  }
+
+  .playlist-card__copy b {
+    font-size: 0.98rem;
+  }
+
+  .playlist-card__copy small {
+    font-size: 0.72rem;
+  }
+
+  .jaam-layout__player {
+    padding-bottom: 18px;
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(600px, 55vw);
+  }
+
+  .now-playing__label {
+    margin-bottom: 11px;
+  }
+
+  .now-playing__title {
+    font-size: clamp(1.8rem, 3vw, 2.55rem);
+  }
+
+  .now-playing__artist {
+    margin-top: 7px;
+  }
+
+  .now-playing__wave {
+    margin-top: 18px;
+    margin-bottom: 16px;
+    height: 32px;
+  }
+
+  .now-playing__controls {
+    gap: 18px;
+  }
+
+  .now-playing__button {
+    width: 52px;
+    height: 52px;
+  }
+
+  .now-playing__button--main {
+    width: 68px;
+    height: 68px;
+  }
+
+  .now-playing__progress {
+    margin-top: 18px;
   }
 }
 
-/* ========================================
-   SMALL MOBILE
-   ======================================== */
+/* Very short laptop / browser viewport. */
+@media (min-width: 801px) and (max-height: 700px) {
+  .jaam-layout {
+    padding-top: 16px;
+    padding-bottom: 12px;
+  }
 
-@media (max-width: 480px) {
-  :root {
-    --content-padding: 16px;
+  .jaam-layout__brand {
+    top: 16px;
+  }
+
+  .jaam-layout__playlists {
+    margin-top: 82px;
+  }
+
+  .playlist-list {
+    gap: 5px;
+  }
+
+  .playlist-card {
+    min-height: 62px;
+    padding: 6px 10px;
+  }
+
+  .playlist-card__artwork {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .playlist-card__copy {
+    gap: 3px;
+  }
+
+  .playlist-card__copy b {
+    font-size: 0.9rem;
+  }
+
+  .playlist-card__copy small {
+    font-size: 0.66rem;
+  }
+
+  .jaam-layout__player {
+    padding-bottom: 12px;
+  }
+
+  .now-playing__label {
+    margin-bottom: 7px;
+  }
+
+  .now-playing__title {
+    font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+  }
+
+  .now-playing__wave {
+    margin: 13px auto 11px;
+    height: 26px;
+  }
+
+  .now-playing__button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .now-playing__button--main {
+    width: 60px;
+    height: 60px;
+  }
+
+  .now-playing__progress {
+    margin-top: 12px;
+  }
+}
+
+/* Wide screens: don't let the layout become excessively stretched. */
+@media (min-width: 1600px) {
+  .jaam-layout {
+    grid-template-columns: 390px minmax(0, 1fr);
+  }
+
+  .jaam-layout__playlists {
+    width: 360px;
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(650px, 55vw);
+    margin-left: -30px;
+  }
+}
+
+/* Tablet portrait: preserve the same components, stack them naturally. */
+@media (min-width: 601px) and (max-width: 800px) {
+  #root,
+  body,
+  .app.jaam {
+    min-height: 100dvh;
+  }
+
+  .jaam-layout {
+    min-height: 100dvh;
+    height: auto;
+  }
+
+  .jaam-layout__playlists {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .jaam-layout__player {
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Mobile: account for dynamic browser chrome and device safe areas. */
+@media (max-width: 600px) {
+  .app.jaam {
+    min-height: 100svh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .jaam-layout {
+    min-height: 100svh;
+    min-height: 100dvh;
+    height: auto;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(560px, calc(100vw - 28px));
+  }
+
+  .now-playing__title {
+    max-width: 100%;
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
+  }
+
+  .now-playing__progress {
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    gap: 9px;
+  }
+}
+
+/* Landscape phones/tablets: keep the existing horizontal playlist. */
+@media (max-width: 800px) and (orientation: landscape) {
+  .jaam-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-top: 14px;
+  }
+
+  .jaam-layout__brand {
+    margin-bottom: 0;
+  }
+
+  .jaam-layout__playlists {
+    margin-top: 4px;
+  }
+
+  .jaam-layout__player {
+    padding-top: 8px;
+    padding-bottom: 16px;
+  }
+
+  .now-playing__wave {
+    margin-top: 12px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Prevent layout jumps when scrollbar visibility changes. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Accessibility: don't force animations on reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .playlist-card,
+  .now-playing__button,
+  .now-playing__wave i {
+    transition: none !important;
+    animation: none !important;
   }
 }

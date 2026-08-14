@@ -1,27 +1,50 @@
 /* =========================================
-   JAAM — REFERENCE LAYOUT
+   JAAM — REFERENCE LAYOUT / PACK 7
+   Responsive without changing the UI structure.
    ========================================= */
 
-#root {
+* {
+  box-sizing: border-box;
+}
+
+html {
   width: 100%;
-  min-height: 100vh;
+  min-width: 320px;
+  min-height: 100%;
+  background: #050302;
 }
 
 body {
   margin: 0;
+  width: 100%;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100svh;
   overflow-x: hidden;
   background: #050302;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .app.jaam {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
   background: #050302;
   color: #fff;
+  isolation: isolate;
 }
 
 .jaam-layout {
@@ -29,7 +52,7 @@ body {
   z-index: 10;
   width: 100%;
   min-height: 100vh;
-  box-sizing: border-box;
+  min-height: 100svh;
   display: grid;
   grid-template-columns: 370px minmax(0, 1fr);
   padding: 42px 42px 38px;
@@ -46,18 +69,20 @@ body {
   width: 350px;
   align-self: start;
   margin-top: 150px;
+  min-width: 0;
 }
 
 .playlist-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 0;
 }
 
 .jaam-layout__player {
   min-width: 0;
   min-height: calc(100vh - 80px);
-  box-sizing: border-box;
+  min-height: calc(100svh - 80px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -80,34 +105,76 @@ body {
   display: none;
 }
 
-@media (max-width: 1100px) {
+/* -----------------------------------------
+   Laptop
+   ----------------------------------------- */
+
+@media (max-width: 1280px) {
   .jaam-layout {
-    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-columns: 310px minmax(0, 1fr);
     padding-left: 28px;
     padding-right: 28px;
   }
 
+  .jaam-layout__brand {
+    left: 28px;
+  }
+
   .jaam-layout__playlists {
-    width: 285px;
+    width: 295px;
   }
 
   .jaam-layout__player .now-playing {
-    width: min(600px, 60vw);
+    width: min(600px, 58vw);
     margin-left: 0;
   }
 }
 
-@media (max-width: 800px) {
+/* -----------------------------------------
+   Tablet landscape
+   ----------------------------------------- */
+
+@media (max-width: 1024px) and (min-width: 901px) {
+  .jaam-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    padding: 26px 24px 28px;
+  }
+
+  .jaam-layout__brand {
+    top: 26px;
+    left: 24px;
+  }
+
+  .jaam-layout__playlists {
+    width: 265px;
+    margin-top: 122px;
+  }
+
+  .jaam-layout__player {
+    min-height: calc(100svh - 54px);
+    padding: 0 8px 30px;
+  }
+
+  .jaam-layout__player .now-playing {
+    width: min(560px, 58vw);
+  }
+}
+
+/* -----------------------------------------
+   Tablet portrait + mobile
+   ----------------------------------------- */
+
+@media (max-width: 900px) {
   .app.jaam {
-    min-height: 100svh;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 
   .jaam-layout {
     grid-template-columns: 1fr;
     min-height: 100svh;
-    padding: 28px 18px 30px;
-    gap: 22px;
+    padding: 28px 24px 36px;
+    gap: 26px;
   }
 
   .jaam-layout__brand {
@@ -117,29 +184,69 @@ body {
   }
 
   .jaam-layout__playlists {
-    width: 100%;
-    margin-top: 18px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .jaam-layout__playlists::-webkit-scrollbar {
-    display: none;
+    width: min(100%, 620px);
+    margin: 0 auto;
   }
 
   .playlist-list {
-    flex-direction: row;
-    width: max-content;
+    width: 100%;
+  }
+
+  .playlist-card {
+    width: 100%;
+    min-width: 0;
   }
 
   .jaam-layout__player {
+    width: min(100%, 700px);
     min-height: auto;
-    padding: 35px 0 20px;
+    margin: 0 auto;
+    padding: 18px 0 22px;
     align-items: center;
   }
 
   .jaam-layout__player .now-playing {
-    width: min(650px, 94vw);
+    width: min(620px, 100%);
     margin: 0;
+  }
+}
+
+/* -----------------------------------------
+   Mobile
+   ----------------------------------------- */
+
+@media (max-width: 600px) {
+  .jaam-layout {
+    padding: 22px 18px 28px;
+    gap: 20px;
+  }
+
+  .jaam-layout__player {
+    padding: 18px 0 10px;
+  }
+}
+
+/* -----------------------------------------
+   Small mobile
+   ----------------------------------------- */
+
+@media (max-width: 380px) {
+  .jaam-layout {
+    padding: 18px 14px 24px;
+    gap: 17px;
+  }
+}
+
+/* -----------------------------------------
+   Safe-area support for phones with notches
+   ----------------------------------------- */
+
+@supports (padding: max(0px)) {
+  @media (max-width: 900px) {
+    .jaam-layout {
+      padding-left: max(14px, env(safe-area-inset-left));
+      padding-right: max(14px, env(safe-area-inset-right));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
   }
 }
